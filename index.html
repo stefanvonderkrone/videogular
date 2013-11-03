@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs -->
+	<meta charset="utf-8">
+	<title>Videogular | A video player for AngularJS</title>
+	<meta name="description" content="Responsive HTML5 Flat App Selling Landing Page">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="font/font-awesome.min.css">
+	<link rel="stylesheet" href="css/layout.css">
+
+
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!--[if lt IE 10]>
+		<style type="text/css">
+			#wrapper.pushed {top: 0;}
+			.js .tablet-mockup, .js .testimonial, .js .price-table, .js .include-box, .js .app-ov img {opacity: 1;}
+			.selector li.active .active-bg {width: 334px;}
+		</style>
+	<![endif]-->
+
+	<!-- Webfonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800|Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+<!-- Primary Page Layout
+================================================== -->
+
+<!-- Site wrapper -->
+<div id="wrapper">
+
+	<!-- Back Top Btn -->
+	<i id="back-top" class="icon-angle-up downscaled"></i>
+
+    <!-- Header -->
+    <header id="header">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="sixteen columns">
+
+                <!-- Logo -->
+                <a href="#" class="logo">
+                    <h1>Videogular</h1>
+                </a>
+
+            </div>
+
+        </div><!-- / Container -->
+
+    </header><!-- / Header -->
+
+    <!-- Slider -->
+    <section id="home" ng-app="videogularApp">
+
+        <!-- Container -->
+        <div class="container" ng-controller="MainController">
+            <div>
+                <div videogular vg-width="data.width" vg-height="data.height" id="videoDemo" vg-theme="theme.url" vg-autoplay="data.autoPlay" vg-video-stretch="stretchMode.value">
+                    <video class='videoPlayer' preload='metadata'>
+                        <source src="assets/videos/oceans-clip.mp4" type="video/mp4">
+                        <source src="assets/videos/oceans-clip.webm" type="video/webm">
+                        <source src="assets/videos/oceans-clip.ogv" type="video/ogg">
+                    </video>
+
+                    <div vg-poster-image vg-url='data.plugins.poster.url' vg-poster-stretch="stretchMode.value"></div>
+                    <div vg-buffering></div>
+                    <div vg-overlayPlay></div>
+
+                    <div vg-controls vg-autohide="data.autoHide" style="height: 50px;">
+                        <div vg-playpauseButton></div>
+                        <div vg-timeDisplay>{{ currentTime }}</div>
+                        <div vg-scrubBar>
+                            <div vg-scrubbarcurrenttime></div>
+                        </div>
+                        <div vg-timeDisplay>{{ totalTime }}</div>
+                        <div vg-volume>
+                            <div vg-mutebutton></div>
+                            <div vg-volumebar></div>
+                        </div>
+                        <div vg-fullscreenButton></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h2>All Videogular properties are bindable.</h2>
+                    <h2>Play with bindings. Have fun.</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div>
+                        <label for="themeSelect">Theme:</label>
+                        <select id="themeSelect" class="form-control" ng-model="theme" ng-options="theme.label for theme in data.themes"></select>
+                    </div>
+                    <div>
+                        <label for="widthInput">Width:</label>
+                        <input id="widthInput" class="form-control" type="text" ng-model="data.width">
+                    </div>
+                    <div>
+                        <label for="heightInput">Height:</label>
+                        <input id="heightInput" class="form-control" type="text" ng-model="data.height">
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div>
+                        <label for="posterInput">Poster url image (png/jpg/gif):</label>
+                        <input id="posterInput" class="form-control" type="text" ng-model="data.plugins.poster.url">
+                    </div>
+                    <div>
+                        <label for="stretchSelect">Stretch Mode:</label>
+                        <select id="stretchSelect" class="form-control" ng-model="stretchMode" ng-options="stretchItem.label for stretchItem in data.stretchModes"></select>
+                    </div>
+                    <div>
+                        <label class="checkbox">
+                            <input id="autoHideInput" type="checkbox" ng-model="data.autoHide">Autohide
+                        </label>
+                    </div>
+                    <div>
+                        <label class="checkbox">
+                            <input id="responsiveInput" type="checkbox" ng-model="data.responsive" ng-change="onChangeResponsiveMode()">Responsive
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- / Container -->
+
+    </section><!-- / Slider -->
+
+    <!-- Includes -->
+    <section id="includes">
+
+        <!-- Container -->
+        <div class="container">
+
+            <!-- Section Title -->
+            <div class="col-12">
+                <h1 class="section-title">Why Videogular?</h1>
+                <span class="section-title-bullet"></span>
+            </div>
+
+            <div class="row">
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-font"></i>
+                    <h2>AngularJS based</h2>
+                    <p>Videogular is developed with AngularJS and it will fit in your project like a charm.</p>
+                </div>
+
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-exchange"></i>
+                    <h2>Bindable properties</h2>
+                    <p>Videogular's directives are bindable, just <a href="#home">try the demo</a> and play with bindings.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-wrench"></i>
+                    <h2>Plugin system</h2>
+                    <p>Thanks to our API you can develop your own plugins.</p>
+                </div>
+
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-pencil"></i>
+                    <h2>Theme based</h2>
+                    <p>Customize it with your own themes and change between them on the fly.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-fullscreen"></i>
+                    <h2>Native fullscreen</h2>
+                    <p>Enjoy with native fullscreen support for Chrome, Firefox, Safari, iOS, Chrome for Android and Windows Phone.</p>
+                </div>
+
+                <!-- Icon Box -->
+                <div class="col-6 include-box">
+                    <i class="icon-mobile-phone"></i>
+                    <h2>Mobile support</h2>
+                    <p>Videogular can detect mobile devices to show/hide components in case that aren't supported.</p>
+                </div>
+            </div>
+
+        </div><!-- / Container -->
+
+    </section><!-- / Includes -->
+
+
+    <!-- Cta Bar -->
+    <section id="cta-bar">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 call-to-action">
+                    <h1>Videogular is free and Open Source released under MIT license. Help us on Github by submitting bugs, asking for features or contributing.</h1>
+                    <a href="http://www.github.com/2fdevs/videogular" class="btn">fork this project</a>
+                </div>
+            </div>
+
+        </div><!-- / Container -->
+
+    </section><!-- / Cta Bar -->
+
+    <!-- Footer -->
+    <footer id="footer">
+
+        <!-- Contact Bar -->
+        <div class="contact-bar">
+
+            <!-- Container -->
+            <div class="container">
+
+                <div class="row">
+                    <!-- Bar -->
+                    <div class="col-12">
+                        <div class="contact-info">
+                            <h2>Have you used Videogular in your project?</h2>
+                            <span class="btn dark">contact us</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- / Container -->
+
+        </div><!-- / Contact Bar -->
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+
+            <!-- Container -->
+            <div class="container">
+
+                <!-- Form -->
+                <div class="col-12 contact-form">
+                    <h1>We want to know what have you done with Videogular, tell us and we will put in this website as a featured project!</h1>
+                    <form method="post" action="mailer.php" id="cform">
+                        <input type="text" name="name" class="textfield" placeholder="Your name" required />
+                        <input type="email" name="email" class="textfield" placeholder="Your email address" required />
+                        <textarea name="message" class="textarea" placeholder="Your message" required></textarea>
+                        <input type="submit" value="send message" class="btn" />
+                    </form>
+                    <div id="success"></div>
+                </div>
+
+            </div><!-- / Container -->
+
+        </div><!-- / Contact Form -->
+
+        <!-- Footer Bar -->
+        <div class="footer-bar">
+
+            <!-- Container -->
+            <div class="container">
+
+                <div class="row">
+                    <!-- Footer Info -->
+                    <div class="col-8">
+                        <h2>Videogular</h2>
+                        <p>This project was created and is maintained by (literally) <a href="http://www.twofuckingdevelopers.com/">Two Fucking Developers</a>.</p>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="col-4">
+                        <ul class="social-icons">
+                            <li><a href="http://www.twitter.com/2fdevs"><i class="icon-twitter-sign"></i></a></li>
+                            <li><a href="http://www.github.com/2fdevs/videogular"><i class="icon-github-sign"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- / Container -->
+
+        </div><!-- / Footer Bar -->
+
+    </footer><!-- / Footer -->
+
+</div><!-- / Main Wrapper -->
+
+
+
+
+
+
+<!-- Javascript
+================================================== -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="js/jquery.placeholder.js"></script>
+
+<script type="text/javascript" src="js/custom.js"></script>
+
+<script src="lib/angular/angular.js" type="text/javascript"></script>
+<script src="lib/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
+<script src="lib/gsap/TweenMax.min.js"></script>
+
+<script src="js/com/2fdevs/videogular/videogular.js" type="text/javascript"></script>
+<script src="js/com/2fdevs/videogular/plugins/controlbar.js" type="text/javascript"></script>
+<script src="js/com/2fdevs/videogular/plugins/overlayplay.js" type="text/javascript"></script>
+<script src="js/com/2fdevs/videogular/plugins/buffering.js" type="text/javascript"></script>
+<script src="js/com/2fdevs/videogular/plugins/poster.js" type="text/javascript"></script>
+
+<script src="js/app.js" type="text/javascript"></script>
+
+	<!--[if lt IE 10]>
+		<script type="text/javascript">
+			$(".menu-btn i").click(function(){
+				if($('#wrapper').hasClass('pushed')){
+					$('#wrapper').animate({top: "0"});
+				} else {
+					$('#wrapper').animate({top: "+=96px"});
+				}
+			});
+			
+			$(window).scroll(function(){
+				if($('#wrapper').hasClass('pushed')){
+					$('#wrapper').animate({top: "0"});
+				}
+			});
+
+			$(".menu li a").click(function(e){		
+				$('#wrapper').animate({top: "0"});
+			});			
+			
+		</script>
+	<![endif]-->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>
