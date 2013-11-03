@@ -1,4 +1,4 @@
 Videogular
 ==========
 
-Videogular's GitHub page.
+Videogular.com website.
