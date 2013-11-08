@@ -43,7 +43,6 @@
 
 <!-- Site wrapper -->
 <div id="wrapper">
-
 	<!-- Back Top Btn -->
 	<i id="back-top" class="icon-angle-up downscaled"></i>
 
@@ -72,7 +71,7 @@
         <!-- Container -->
         <div class="container" ng-controller="MainController">
             <div>
-                <div videogular vg-width="data.width" vg-height="data.height" id="videoDemo" vg-theme="theme.url" vg-autoplay="data.autoPlay" vg-video-stretch="stretchMode.value">
+                <div videogular id="videoDemo" vg-width="data.width" vg-height="data.height" vg-theme="theme.url" vg-autoplay="data.autoPlay" vg-video-stretch="stretchMode.value">
                     <video class='videoPlayer' preload='metadata'>
                         <source src="assets/videos/oceans-clip.mp4" type="video/mp4">
                         <source src="assets/videos/oceans-clip.webm" type="video/webm">
@@ -138,7 +137,7 @@
                     </div>
                     <div>
                         <label class="checkbox">
-                            <input id="responsiveInput" type="checkbox" ng-model="data.responsive" ng-change="onChangeResponsiveMode()">Responsive
+                            <input id="responsiveInput" type="checkbox" ng-model="data.responsive">Responsive
                         </label>
                     </div>
                 </div>

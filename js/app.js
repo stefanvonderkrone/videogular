@@ -41,7 +41,7 @@ controllerModule.controller("MainController", ["$scope", "$window", "VG_EVENTS",
 		"height": 480,
 		"autoHide": false,
 		"autoPlay": false,
-		"responsive": true,
+		"responsive": false,
 		"themes": [
 			{label: "Default", url: "themes/default/videogular.css"},
 			{label: "Solid", url: "themes/solid/solid.css"}
