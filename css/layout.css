@@ -114,7 +114,7 @@ p a, p a:visited {line-height: inherit;}
 
 .logo {float: left;}
 
-.logo img {padding-top: 20px;}
+.logo img {padding-top: 10px;}
 
 .menu-btn {float: right;}
 
@@ -145,6 +145,8 @@ p a, p a:visited {line-height: inherit;}
 #home div.container {padding-top: 50px; padding-bottom: 50px;}
 
 #home h2 {color: #DDDDDD; font-size: 30px; text-align: center;}
+
+#home h1 {color: #DDDDDD; font-size: 40px; text-align: center;}
 
 #home label {color: #DDDDDD; padding-top: 10px;}
 
