@@ -1,30 +1,29 @@
 'use strict';
 angular.module('myApp').controller('MainCtrl',
-	function ($scope) {
-		$scope.stretchModes = [
-			{label: "None", value: "none"},
-			{label: "Fit", value: "fit"},
-			{label: "Fill", value: "fill"}
-		];
+	function ($scope, $sce) {
+		$scope.currentTime = 0;
+		$scope.totalTime = 0;
+		$scope.state = null;
+		$scope.volume = 1;
+		$scope.isCompleted = false;
+		$scope.API = null;
+
+		$scope.onPlayerReady = function(API) {
+			$scope.API = API;
+		};
 
 		$scope.config = {
-			width: 740,
-			height: 380,
 			autoHide: false,
+			autoHideTime: 3000,
 			autoPlay: false,
-			responsive: true,
-			stretch: $scope.stretchModes[1],
+			sources: [
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/videos/videogular.mp4"), type: "video/mp4"},
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/videos/videogular.webm"), type: "video/webm"},
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/videos/videogular.ogg"), type: "video/ogg"}
+			],
+			transclude: true,
 			theme: {
-				url: "styles/themes/default/videogular.css",
-				playIcon: "&#xe000;",
-				pauseIcon: "&#xe001;",
-				volumeLevel3Icon: "&#xe002;",
-				volumeLevel2Icon: "&#xe003;",
-				volumeLevel1Icon: "&#xe004;",
-				volumeLevel0Icon: "&#xe005;",
-				muteIcon: "&#xe006;",
-				enterFullScreenIcon: "&#xe007;",
-				exitFullScreenIcon: "&#xe008;"
+				url: "styles/themes/default/videogular.css"
 			},
 			plugins: {
 				poster: {

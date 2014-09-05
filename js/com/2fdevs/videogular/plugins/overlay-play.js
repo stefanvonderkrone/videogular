@@ -1,53 +1,66 @@
+/**
+ * @license Videogular v0.4.0 http://videogular.com
+ * Two Fucking Developers http://twofuckingdevelopers.com
+ * License: MIT
+ */
 "use strict";
 angular.module("com.2fdevs.videogular.plugins.overlayplay", [])
 	.directive(
 		"vgOverlayPlay",
-		["VG_EVENTS", "VG_STATES", function(VG_EVENTS, VG_STATES){
+		["VG_STATES", function(VG_STATES){
 			return {
 				restrict: "E",
 				require: "^videogular",
 				scope: {
 					vgPlayIcon: "="
 				},
-				controller: function ($scope){
-					$scope.playIcon = $.parseHTML($scope.vgPlayIcon)[0].data;
-					$scope.currentIcon = $scope.playIcon;
-				},
-				templateUrl: "views/videogular/plugins/overlay-play/overlay-play.html",
+				template:
+					"<div class='overlayPlayContainer'>"+
+						"<div class='iconButton' ng-class='overlayPlayIcon'></div>"+
+					"</div>",
 				link: function(scope, elem, attr, API) {
 					function onComplete(target, params) {
-						scope.currentIcon = scope.playIcon;
+						scope.overlayPlayIcon = {play: true};
 					}
 
 					function onClickOverlayPlay(event) {
 						API.playPause();
+						scope.$apply();
 					}
 
 					function onPlay(target, params) {
-						scope.currentIcon = "";
+						scope.overlayPlayIcon = {};
 					}
 
-					function onChangeState(target, params) {
-						switch (params[0]) {
+					function onChangeState(newState) {
+						switch (newState) {
 							case VG_STATES.PLAY:
-								scope.currentIcon = "";
+								scope.overlayPlayIcon = {};
 								break;
 
 							case VG_STATES.PAUSE:
-								scope.currentIcon = scope.playIcon;
+								scope.overlayPlayIcon = {play: true};
 								break;
 
 							case VG_STATES.STOP:
-								scope.currentIcon = scope.playIcon;
+								scope.overlayPlayIcon = {play: true};
 								break;
 						}
 					}
 
 					elem.bind("click", onClickOverlayPlay);
+					scope.overlayPlayIcon = {play: true};
 
-					API.$on(VG_EVENTS.ON_PLAY, onPlay);
-					API.$on(VG_EVENTS.ON_SET_STATE, onChangeState);
-					API.$on(VG_EVENTS.ON_COMPLETE, onComplete);
+					scope.$watch(
+						function() {
+							return API.currentState;
+						},
+						function(newVal, oldVal) {
+							if (newVal != oldVal) {
+								onChangeState(newVal);
+							}
+						}
+					);
 				}
 			}
 		}
