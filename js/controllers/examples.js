@@ -41,6 +41,11 @@ angular.module('myApp')
                 $scope.state = state;
             };
 
+			$scope.audio = [
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/audios/videogular.mp3"), type: "audio/mpeg"},
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/audios/videogular.ogg"), type: "audio/ogg"}
+			];
+
             $scope.videos = [
                 {
                     sources: [

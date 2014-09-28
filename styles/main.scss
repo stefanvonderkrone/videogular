@@ -13,10 +13,21 @@ $tablet-height: $tablet-width * 9 / 16;
 	margin: auto;
 }
 
+.videogular-container {
+	width: 100%;
+	height: 50px;
+	margin: auto;
+}
+
 @media (min-width: 1200px) {
 	.videogular-container {
 		width: $large-width;
 		height: $large-height;
+	}
+
+	.videogular-container.audio {
+		width: $large-width;
+		height: 50px;;
 	}
 }
 
@@ -25,12 +36,22 @@ $tablet-height: $tablet-width * 9 / 16;
 		width: $normal-width;
 		height: $normal-height;
 	}
+
+	.videogular-container.audio {
+		width: $normal-width;
+		height: 50px;;
+	}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
 	.videogular-container {
 		width: $tablet-width;
 		height: $tablet-height;
+	}
+
+	.videogular-container.audio {
+		width: $tablet-width;
+		height: 50px;;
 	}
 }
 

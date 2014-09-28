@@ -87,34 +87,27 @@
 
 	<div class="row">
 		<div class="col-12">
-			<div class="videogular-container">
-				<videogular vg-player-ready="onPlayerReady" vg-update-state="onUpdateState" vg-complete="onCompleteVideo" vg-theme="config.theme.url">
-					<vg-video vg-src="config.sources"></vg-video>
+			<div class="videogular-container audio">
+				<videogular vg-theme="config.theme.url"
+							vg-autoplay="config.autoPlay">
+					<vg-audio vg-src="audio"
+							  vg-loop="config.loop"
+							  vg-preload="config.preload"
+							  vg-native-controls="config.controls">
+					</vg-audio>
 
 					<vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime">
 						<vg-play-pause-button></vg-play-pause-button>
-						<vg-timedisplay>{{ API.currentTime | date:'mm:ss' }}</vg-timedisplay>
+						<vg-timedisplay>{{ currentTime | date:'mm:ss' }}</vg-timedisplay>
 						<vg-scrubBar>
 							<vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
 						</vg-scrubBar>
-						<vg-timedisplay>{{ API.timeLeft | date:'mm:ss' }}</vg-timedisplay>
+						<vg-timedisplay>{{ timeLeft | date:'mm:ss' }}</vg-timedisplay>
 						<vg-volume>
 							<vg-mutebutton></vg-mutebutton>
-							<vg-volumebar></vg-volumebar>
 						</vg-volume>
-						<vg-fullscreenButton></vg-fullscreenButton>
 					</vg-controls>
-
-					<vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
-					<vg-buffering></vg-buffering>
-					<vg-poster-image vg-url='config.plugins.poster'></vg-poster-image>
 				</videogular>
-			</div>
-			<div class="playlist">
-				<ul>
-					<li><a ng-click="setVideo(0)">Pale Blue Dot</a></li>
-					<li><a ng-click="setVideo(1)">Big Buck Bunny</a></li>
-				</ul>
 			</div>
 		</div>
 	</div>
@@ -124,34 +117,25 @@
 			<h5 class="code-title">HTML</h5>
             <pre class="code">
                 <code class="html">&lt;div class=&quot;videogular-container&quot;&gt;
-	&lt;videogular vg-player-ready=&quot;onPlayerReady&quot; vg-update-state=&quot;onUpdateState&quot; vg-complete=&quot;onCompleteVideo&quot; vg-theme=&quot;config.theme.url&quot;&gt;
-		&lt;vg-video vg-src=&quot;config.sources&quot;&gt;&lt;/vg-video&gt;
+	&lt;videogular vg-theme=&quot;config.theme.url&quot; vg-autoplay=&quot;config.autoPlay&quot;&gt;
+		&lt;vg-audio vg-src=&quot;audio&quot;
+					vg-loop=&quot;config.loop&quot;
+					vg-preload=&quot;config.preload&quot;
+					vg-native-controls=&quot;config.controls&quot;&gt;
+		&lt;/vg-audio&gt;
 
 		&lt;vg-controls vg-autohide=&quot;config.autoHide&quot; vg-autohide-time=&quot;config.autoHideTime&quot;&gt;
 			&lt;vg-play-pause-button&gt;&lt;/vg-play-pause-button&gt;
-			&lt;vg-timedisplay&gt;{{ API.currentTime | date:'mm:ss' }}&lt;/vg-timedisplay&gt;
+			&lt;vg-timedisplay&gt;{{ currentTime | date:'mm:ss' }}&lt;/vg-timedisplay&gt;
 			&lt;vg-scrubBar&gt;
-				&lt;vg-scrubbarcurrenttime&gt;&lt;/vg-scrubbarcurrenttime&gt;
+			    &lt;vg-scrubbarcurrenttime&gt;&lt;/vg-scrubbarcurrenttime&gt;
 			&lt;/vg-scrubBar&gt;
-			&lt;vg-timedisplay&gt;{{ API.timeLeft | date:'mm:ss' }}&lt;/vg-timedisplay&gt;
+			&lt;vg-timedisplay&gt;{{ timeLeft | date:'mm:ss' }}&lt;/vg-timedisplay&gt;
 			&lt;vg-volume&gt;
-				&lt;vg-mutebutton&gt;&lt;/vg-mutebutton&gt;
-				&lt;vg-volumebar&gt;&lt;/vg-volumebar&gt;
+			    &lt;vg-mutebutton&gt;&lt;/vg-mutebutton&gt;
 			&lt;/vg-volume&gt;
-			&lt;vg-fullscreenButton&gt;&lt;/vg-fullscreenButton&gt;
 		&lt;/vg-controls&gt;
-
-		&lt;vg-overlay-play vg-play-icon=&quot;config.theme.playIcon&quot;&gt;&lt;/vg-overlay-play&gt;
-		&lt;vg-buffering&gt;&lt;/vg-buffering&gt;
-		&lt;vg-poster-image vg-url='config.plugins.poster'&gt;&lt;/vg-poster-image&gt;
-	&lt;/videogular&gt;
-&lt;/div&gt;
-&lt;div class=&quot;playlist&quot;&gt;
-	&lt;ul&gt;
-		&lt;li&gt;&lt;a ng-click=&quot;setVideo(0)&quot;&gt;Pale Blue Dot&lt;/a&gt;&lt;/li&gt;
-		&lt;li&gt;&lt;a ng-click=&quot;setVideo(1)&quot;&gt;Big Buck Bunny&lt;/a&gt;&lt;/li&gt;
-	&lt;/ul&gt;
-&lt;/div&gt;</code>
+	&lt;/videogular&gt;</code>
             </pre>
 		</div>
 
@@ -162,68 +146,21 @@
 angular.module('myApp')
 	.controller('ExampleBasicCtrl',
         function ($scope, $sce) {
-            $scope.currentTime = 0;
-            $scope.totalTime = 0;
-            $scope.state = null;
-            $scope.volume = 0;
-            $scope.isCompleted = false;
-            $scope.API = null;
-            $scope.currentVideo = 0;
-
-            $scope.onPlayerReady = function(API) {
-                $scope.API = API;
-
-                if ($scope.state == 'play' || $scope.isCompleted) $scope.API.play();
-
-                $scope.isCompleted = false;
-            };
-
-            $scope.onCompleteVideo = function() {
-                $scope.isCompleted = true;
-
-                $scope.currentVideo++;
-
-                if ($scope.currentVideo &gt;= $scope.videos.length) $scope.currentVideo = 0;
-
-                $scope.setVideo($scope.currentVideo);
-            };
-
-            $scope.onUpdateState = function(state) {
-                $scope.state = state;
-            };
-
-            $scope.videos = [
-                {
-                    sources: [
-                        {src: $sce.trustAsResourceUrl(&quot;videogular.mp4&quot;), type: &quot;video/mp4&quot;},
-                        {src: $sce.trustAsResourceUrl(&quot;videogular.webm&quot;), type: &quot;video/webm&quot;},
-                        {src: $sce.trustAsResourceUrl(&quot;videogular.ogg&quot;), type: &quot;video/ogg&quot;}
-                    ]
-                },
-                {
-                    sources: [
-                        {src: $sce.trustAsResourceUrl(&quot;big_buck_bunny_720p_h264.mov&quot;), type: &quot;video/mp4&quot;},
-                        {src: $sce.trustAsResourceUrl(&quot;big_buck_bunny_720p_stereo.ogg&quot;), type: &quot;video/ogg&quot;}
-                    ]
-                }
-            ];
+            $scope.audio = [
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/audios/videogular.mp3"), type: "audio/mpeg"},
+				{src: $sce.trustAsResourceUrl("http://www.videogular.com/assets/audios/videogular.ogg"), type: "audio/ogg"}
+			];
 
             $scope.config = {
                 autoHide: false,
                 autoHideTime: 3000,
                 autoPlay: false,
-                sources: $scope.videos[0].sources,
                 theme: {
                     url: &quot;styles/themes/default/videogular.css&quot;
                 },
                 plugins: {
                     poster: &quot;assets/images/videogular.png&quot;
                 }
-            };
-
-            $scope.setVideo = function(index) {
-                $scope.currentVideo = index;
-                $scope.config.sources = $scope.videos[index].sources;
             };
         }
     );</code>
